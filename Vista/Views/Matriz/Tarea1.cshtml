@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Tarea1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Tarea 1</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        @Html.TextArea("entrada", new {style="width: 300px; height: 300px", @class="form-control"})
+    </div>
+
+    <div class="col-md-4">
+        <a id="btn" class="btn btn-danger"><i class="bi bi-pencil-square" o></i>Proceso</a>
+    </div>
+
+    <div class="col-md-4">
+        @Html.TextArea("salida", new {style="width: 300px; height: 300px", @class="form-control"})
+    </div>
+</div>
+
+
+@section Scripts
+    {
+
+    <script type="text/javascript">
+        
+        $(document).ready(function(){
+            $("#btn").click(function(){
+                var url = "@Url.Action("min", "Matriz")";
+                var ent = $("#entrada").val();
+                var data = {matriz: ent};
+
+                $.post(url, data).done(function (data){
+                    $("#salida").val(data);
+                }).fail(function (){
+                    console.log("Error");
+                });
+            });
+        });
+    </script>
+}
