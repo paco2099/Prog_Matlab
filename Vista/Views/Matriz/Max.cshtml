@@ -1,13 +1,13 @@
-﻿@{
-    ViewData["Title"] = "Tarea1";
+@{
+    ViewData["Title"] = "Max";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>min</h1>
+<h1>max</h1>
 
 <div class="row">
     <div class="col-md-4">
-        @Html.TextArea("entrada", new {style="width: 300px; height: 300px", @class="form-control"})
+        @Html.TextArea("entrada", new { style = "width: 300px; height: 300px", @class = "form-control" })
     </div>
 
     <div class="col-md-4">
@@ -15,7 +15,7 @@
     </div>
 
     <div class="col-md-4">
-        @Html.TextArea("salida", new {style="width: 300px; height: 300px", @class="form-control"})
+        @Html.TextArea("salida", new { style = "width: 300px; height: 300px", @class = "form-control" })
     </div>
 </div>
 
@@ -24,11 +24,11 @@
     {
 
     <script type="text/javascript">
-        
+
         $(document).ready(function(){
             $("#btn").click(function () {
                 const regex = /^[\s*-?0-9]+$/;
-                var url = "@Url.Action("min", "Matriz")";
+                var url = "@Url.Action("max", "Matriz")";
                 var ent = $("#entrada").val();
                 var data = {matriz: ent};
                 if (regex.test(ent)) {
