@@ -28,9 +28,9 @@
         $(document).ready(function(){
             $("#btn").click(function () {
                 const regex = /^[\s*-?0-9]+$/;
-                var url = "@Url.Action("min", "Matriz")";
-                var ent = $("#entrada").val();
-                var data = {matriz: ent};
+                const url = "@Url.Action("min", "Matriz")";
+                const ent = $("#entrada").val();
+                const data = {matriz: ent};
                 if (regex.test(ent)) {
                     $.post(url, data).done(function (data) {
                         $("#salida").val(data);

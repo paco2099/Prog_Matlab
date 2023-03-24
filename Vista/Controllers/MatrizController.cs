@@ -179,7 +179,7 @@ namespace Vista.Controllers
                                     {
                                         return Json("Error: El valor de K excede al tamaño de la matriz");
                                     }
-                                } else if ()
+                                }
                         }
 
 

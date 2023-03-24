@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "mean";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>mean</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        @Html.TextArea("entrada", new {style="width: 300px; height: 300px", @class="form-control"})
+        Obtener por: <select id="opciones">
+            <option value ="inicio" selected>Selecciona una opcion</option>
+            <option value="fil">Filas</option>
+            <option value="col">Columnas</option>
+        </select>
+        <a id="btn" class="btn btn-danger"><i class="bi bi-pencil-square" o></i>Proceso</a>
+    </div>
+
+    <div class="col-md-4">
+        @Html.TextArea("salida", new {style="width: 300px; height: 300px", @class="form-control"})
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+        }
+    </script>
+}
