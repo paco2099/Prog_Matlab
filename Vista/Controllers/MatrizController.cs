@@ -56,11 +56,11 @@ namespace Vista.Controllers
                             {
                                 fs.RemoveAt(fs.Count - 1);
                             }
-                        if (String.IsNullOrEmpty(fs[0]))
-                        {
-                            fs.RemoveAt(0);
-                        }
-                        var fs_int = fs.Select(int.Parse).ToList();
+                            if (String.IsNullOrEmpty(fs[0]))
+                            {
+                                fs.RemoveAt(0);
+                            }
+                            var fs_int = fs.Select(int.Parse).ToList();
                             filasHD.Add(fs_int);
                         }
 
@@ -116,6 +116,14 @@ namespace Vista.Controllers
                     try
                     {
                         var fila = new List<String>(Regex.Split(filas[0], @"\s+"));
+                        if (String.IsNullOrEmpty(fila[fila.Count - 1]))
+                        {
+                            fila.RemoveAt(fila.Count - 1);
+                        }
+                        if (String.IsNullOrEmpty(fila[0]))
+                        {
+                            fila.RemoveAt(0);
+                        }
                         var fila_int = fila.Select(int.Parse).ToList();
                         fila_int = fila_int.OrderBy(number => number).ToList();
                         var val_min = new List<int>();
@@ -146,26 +154,32 @@ namespace Vista.Controllers
 
                         for (int i = 0; i < filas.Count; i++)
                         {
-                            var fs = new List<String>(Regex.Split(filas[0], @"\s+"));
+                            var fs = new List<String>(Regex.Split(filas[i], @"\s+"));
                             if (String.IsNullOrEmpty(fs[fs.Count - 1]))
                             {
                                 fs.RemoveAt(fs.Count - 1);
                             }
-                            var fs_int = fs.Select(int.Parse).ToList();
-                            fs_int = fs_int.OrderBy(number => number).ToList();
-                            var min = new List<int>();
-                            if (fs_int.Count > k)
+                            if (String.IsNullOrEmpty(fs[0]))
                             {
-                                for (int j = 0; j < k; j++)
-                                {
-                                    min.Add(fs_int[j]);
-                                }
-                                filasHD.Add(min);
+                                fs.RemoveAt(0);
                             }
-                            else
-                            {
-                                return Json("Error: El valor de K excede al tamaño de la matriz");
-                            }
+                            if (filasHD.Count == 0) {//aaaaaaaaaaaaaaaaaaaaaaaaa
+                                    var fs_int = fs.Select(int.Parse).ToList();
+                                    fs_int = fs_int.OrderBy(number => number).ToList();
+                                    var min = new List<int>();
+                                    if (fs_int.Count > k)
+                                    {
+                                        for (int j = 0; j < k; j++)
+                                        {
+                                            min.Add(fs_int[j]);
+                                        }
+                                        filasHD.Add(min);
+                                    }
+                                    else
+                                    {
+                                        return Json("Error: El valor de K excede al tamaño de la matriz");
+                                    }
+                                } else if ()
                         }
 
 
