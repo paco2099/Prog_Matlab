@@ -10,7 +10,7 @@
     <div class="col-md-4">
         @Html.TextArea("entrada", new {style="width: 300px; height: 300px", @class="form-control"})
         Obtener por: <select id="opciones">
-            <option value ="inicio" selected>Selecciona una opcion</option>
+            <option value ="0" selected>Selecciona una opcion</option>
             <option value="fil">Filas</option>
             <option value="col">Columnas</option>
         </select>
@@ -26,8 +26,38 @@
 {
     <script type="text/javascript">
         $(document).ready(function () {
+            $("#btn").click(function () {
+                let opcion = $('#opciones').val();
+                const url = "@Url.Action("mean", "estadistica")";
+                const ent = $("#entrada").val();
+                const regex = /^[\s*-?0-9]+$/;
 
-
-        }
+                if (regex.test(ent)) {
+                    if (opcion == 'fil'){
+                        const modo = 1;
+                        const data = { matriz: ent, a: modo };
+                        $.post(url, data).done(function (data) {
+                            $("#salida").val(data);
+                        }).fail(function () {
+                            $("#salida").val("Error");
+                        });
+                    }
+                    else if (opcion == 'col') {
+                        const modo = 2;
+                        const data = { matriz: ent, a: modo };
+                        $.post(url, data).done(function (data) {
+                            $("#salida").val(data);
+                        }).fail(function () {
+                            $("#salida").val("Error");
+                        });
+                    }
+                    else{
+                        $("#salida").val("Selecciona una opcion, puñetón");
+                    }
+                }else {
+                        $("#salida").val("Error de Front: Los valores ingresados no son numéricos.");
+                }
+            });
+        });
     </script>
 }
