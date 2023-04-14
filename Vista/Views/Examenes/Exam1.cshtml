@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "Examen1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Examen 1er Parcial</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        @Html.TextArea("entrada", new {style="width: 300px; height: 300px", @class="form-control"})
+    </div>
+
+    <div class="col-md-4">
+        <a id="btn" class="btn btn-danger"><i class="bi bi-pencil-square" o></i>Proceso</a>
+    </div>
+
+    <div class="col-md-4">
+        @Html.TextArea("salida", new {style="width: 300px; height: 300px", @class="form-control"})
+    </div>
+</div>
+
+@section Scripts
+    {
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#btn").click(function () {
+                const regex = /^[\s*-?0-9]+$/;
+                const url = "@Url.Action("examen1", "Examenes")";
+                const ent = $("#entrada").val();
+                const data = { matriz: ent };
+                if (regex.test(ent)) {
+                    let filas = ent.split("\n");
+                    if (filas.length == 1){
+                        let fila = filas[0].split(/\s+/).filter(Boolean);
+                        $.post(url, data).done(function (data) {
+                            $("#salida").val(data);
+                        }).fail(function () {
+                            $("#salida").val("Error");
+                        });
+                    } else {
+                        let filasHD = [];
+                        for (var i=0; i<filas.length; i++){
+                                filasHD.push(filas[i].split(/\s+/).filter(Boolean));
+                        }
+
+                        for (var j = 0; j < filas.length; j++) {
+                            if (j ==0){
+                                continue;
+                            } else if (filasHD[j].length == filasHD[j-1].length){
+                                continue;
+                            } else{
+                                $("#salida").val("Error de Front: La matriz no es cuadrada. Favor ingresar una matriz cuadrada.");
+                                return;
+                            }
+                        }
+
+                        $.post(url, data).done(function (data) {
+                            $("#salida").val(data);
+                        }).fail(function () {
+                            $("#salida").val("Error");
+                        });
+
+                    }
+                        
+                } else {
+                    $("#salida").val("Error de Front: Los valores ingresados no son numéricos.");
+                }
+            });
+        });
+    </script>
+}
