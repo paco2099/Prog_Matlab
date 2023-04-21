@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "mldivide";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>mldivide</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <h4>Matriz/Vector/Escalar A</h4>
+        @Html.TextArea("a", new {style="width: 300px; height: 300px", @class="form-control"})
+        <br />
+        <h4>Matriz B</h4>
+        @Html.TextArea("b", new {style="width: 300px; height: 300px", @class="form-control"})
+    </div>
+
+    <div class="col-md-4">
+        <a id="btn" class="btn btn-danger"><i class="bi bi-pencil-square" o></i>Proceso</a>
+    </div>
+
+    <div class="col-md-4">
+        @Html.TextArea("salida", new {style="width: 600px; height: 300px", @class="form-control"})
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $("#btn").click(function () {
+            const regex = /^[\s*-?0-9]+$/;
+            const url = "@Url.Action("mldiv", "Alg_lin")";
+            const a = $("#a").val();
+            const b = $("#b").val();
+            const data = { m1: a,  m2: b};
+            if (regex.test(a) && (regex.test(b))){
+                $.post(url, data).done(function (data) {
+                    $("#salida").val(data);
+                }).fail(function () {
+                    console.log("Error");
+                });
+            } else {
+                $("#salida").val("Error de Front: Los valores ingresados no son numéricos.");
+            }
+        });
+
+
+    </script>
+}
