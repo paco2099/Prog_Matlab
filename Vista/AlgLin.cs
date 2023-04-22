@@ -1,6 +1,5 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
-using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 
 namespace Vista {

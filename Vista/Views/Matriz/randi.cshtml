@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewData["Title"] = "randi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>randi</h1>
+
+<div class="principal">
+La función MATLAB randi ( ) se utiliza para crear matrices bidimensionales o multidimensionales de valores enteros aleatorios. Esta función devuelve en “ c ”, un escalar, vector o matriz con valores enteros aleatorios distribuidos uniformemente entre todos los elementos. El rango de valores aleatorios y el tipo de datos de salida y las dimensiones de trabajo pueden especificarse mediante los argumentos de entrada en la llamada de función.
+<br /> <a id="btn_a" class="btn btn-danger"><i class="bi bi-pencil-square" o></i>¡Pruébalo!</a>
+</div>
+
+<dialog id="modal">
+<div class="row">
+    <div class="col-md-4">
+        Rango: @Html.TextBox("range")
+        <br />N° de filas: @Html.TextBox("fila")
+        <br />N° de columnas: @Html.TextBox("col")
+        <br /><a id="btn" class="btn btn-danger"><i class="bi bi-pencil-square" o></i>Proceso</a>
+        <p><a id="btn_c" class="btn btn-danger"><i class="bi bi-pencil-square" o></i>Cerrar</a></p>
+    </div>
+
+    <div class="col-md-4">
+        @Html.TextArea("salida", new {style="width: 600px; height: 300px", @class="form-control"})
+    </div>
+</div>
+</dialog>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $("#btn_a").click(function(){
+            modal.show();
+        })
+
+        $("#btn_c").click(function () {
+            modal.close();
+        })
+
+        $("#btn").click(function () {
+            const regex = /^[\s*-?0-9]+$/;
+            const url = "@Url.Action("randi", "Matriz")";
+            const f = $("#fila").val();
+            const c = $("#col").val();
+            const r = $("#range").val();
+            const data = { rango: r, filas: f, col: c };
+
+
+            if (regex.test(f) && (regex.test(c)) && (regex.test(r))) {
+                $.post(url, data).done(function (data) {
+                    $("#salida").val(data);
+                }).fail(function () {
+                    console.log("Error");
+                });
+            } else {
+                $("#salida").val("Error de Front: Los valores ingresados no son numéricos.");
+            }
+        });
+
+
+    </script>
+}
