@@ -31,7 +31,6 @@ namespace Vista.Controllers
             return Json(salida);
         }
 
-
         public IActionResult Max()
         {
             return View();

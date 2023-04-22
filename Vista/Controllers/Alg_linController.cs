@@ -1,19 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 
 namespace Vista.Controllers
 {
-    public class ExamenesController : Controller
+    public class Alg_linController : Controller
     {
-        public IActionResult Exam1()
+        public IActionResult mldivide()
         {
             return View();
         }
 
         [HttpPost]
-        public JsonResult examen1(string matriz)
+        public JsonResult mldiv(string m1, string m2)
         {
-            string salida = Logica.Examenes.examen1(matriz);
+            string salida = Logica.Alg_Lineal.mldivide(m1, m2);
             return Json(salida);
         }
     }
