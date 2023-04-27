@@ -6,8 +6,10 @@ namespace Logica
 {
     public class Alg_Lineal
     {
-        public static string mldivide(string m1, string m2)
+        public static Resultado mldivide(string m1, string m2)
         {
+            Resultado resultado = new Resultado();
+
             if (Regex.IsMatch(m1, @"^[\s*-?0-9]") && (Regex.IsMatch(m2, @"^[\s*-?0-9]")))
             {
                 // Dividir la cadena en filas
@@ -143,11 +145,14 @@ namespace Logica
                         salida += filaX + '\n';
                     }
                 }
-
-                return salida;
+                resultado.Correcto = true;
+                resultado.Objecto = salida;
+                return resultado;
             } else
             {
-                return "Error de back: Los datos tienen que ser numéricos.";
+                resultado.Correcto = false;
+                resultado.Mensaje = "Error de back: Los datos tienen que ser numéricos.";
+                return resultado;
             }
         }
     }

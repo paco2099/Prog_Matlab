@@ -5,8 +5,10 @@ namespace Logica
 {
     public class Matriz
     {
-        public static string min(string matriz)
+        public static Resultado min(string matriz)
         {
+            Resultado resultado = new Resultado();
+
             if (Regex.IsMatch(matriz, @"^[\s*-?0-9]") && !(Regex.IsMatch(matriz, @"[a-z]+")))
             {
                 var filas = new List<String>(matriz.Split('\n'));
@@ -27,11 +29,15 @@ namespace Logica
                         var fila_int = fila.Select(int.Parse).ToList();
                         int valorMinimo = fila_int.Min();
 
-                        return valorMinimo.ToString();
+                        resultado.Correcto = true;
+                        resultado.Objecto = valorMinimo.ToString();
+                        return resultado;
                     }
                     catch (Exception)
                     {
-                        return "Error: Ingrese los datos correctamente.";
+                        resultado.Correcto = false;
+                        resultado.Mensaje = "Error: Ingrese los datos correctamente.";
+                        return resultado;
                     }
                 }
                 else
@@ -71,28 +77,37 @@ namespace Logica
                             }
                             else
                             {
-                                return "Error: Las matrices tienen que tener el mismo tamaño.";
+                                resultado.Correcto = false;
+                                resultado.Mensaje = "Error: Las matrices tienen que tener el mismo tamaño.";
+                                return resultado;
                             }
 
                         }
-
-                        return String.Join(" ", minCol);
+                        resultado.Correcto = true;
+                        resultado.Objecto = String.Join(" ", minCol);
+                        return resultado;
                     }
                     catch (Exception)
                     {
-                        return "Error: Las matrices tienen que tener el mismo tamaño.";
+                        resultado.Correcto=false;
+                        resultado.Mensaje = "Error: Las matrices tienen que tener el mismo tamaño.";
+                        return resultado;
                     }
 
                 }
             }
             else
             {
-                return "Error: Los datos ingresados no son numéricos.";
+                resultado.Correcto = false;
+                resultado.Mensaje = "Error: Los datos ingresados no son numéricos.";
+                return resultado;
             }
         }
 
-        public static string mink(string matriz, int k)
+        public static Resultado mink(string matriz, int k)
         {
+            Resultado resultado = new Resultado();
+
             if (Regex.IsMatch(matriz, @"^[\s*-?0-9]") && !(Regex.IsMatch(matriz, @"[a-z]+")))
             {
                 var filas = new List<String>(matriz.Split('\n'));
@@ -119,17 +134,23 @@ namespace Logica
                             {
                                 val_min.Add(fila_int[i]);
                             }
-                            return String.Join(" ", val_min);
+                            resultado.Correcto = true;
+                            resultado.Objecto = String.Join(" ", val_min);
+                            return resultado;
                         }
                         else
                         {
-                            return "Error: El valor de K excede al tamaño de la matriz";
+                            resultado.Correcto = false;
+                            resultado.Mensaje = "Error: El valor de K excede al tamaño de la matriz";
+                            return resultado;
                         }
 
                     }
                     catch (Exception)
                     {
-                        return "Error: Ingrese los datos correctamente.";
+                        resultado.Correcto= false;
+                        resultado.Mensaje = "Error: Ingrese los datos correctamente.";
+                        return resultado;
                     }
                 }
                 else
@@ -164,7 +185,9 @@ namespace Logica
                                 }
                                 else
                                 {
-                                    return "Error: El valor de K excede al tamaño de la matriz";
+                                    resultado.Correcto = false;
+                                    resultado.Mensaje = "Error: El valor de K excede al tamaño de la matriz";
+                                    return resultado;
                                 }
                             }
                         }
@@ -177,21 +200,29 @@ namespace Logica
                             val_min = val_min + (String.Join(" ", filasHD[i])) + "\n";
                         }
 
-                        return val_min;
+                        resultado.Correcto = true;
+                        resultado.Objecto = val_min;
+                        return resultado;
                     }
                     catch (Exception)
                     {
-                        return "Error: Ingrese los datos correctamente.";
+                        resultado.Correcto =false;
+                        resultado.Mensaje = "Error: Ingrese los datos correctamente.";
+                        return resultado;
                     }
                 }
             }
             else
             {
-                return "Error: Los datos ingresados no son numéricos.";
+                resultado.Correcto = false;
+                resultado.Mensaje = "Error: Los datos ingresados no son numéricos.";
+                return resultado;
             }
         }
 
-        public static string max(string matriz) {
+        public static Resultado max(string matriz) {
+            Resultado resultado = new Resultado();
+
             if (Regex.IsMatch(matriz, @"^[\s*-?0-9]") && !(Regex.IsMatch(matriz, @"[a-z]+")))
             {
                 var filas = new List<String>(matriz.Split('\n'));
@@ -204,11 +235,15 @@ namespace Logica
                         var fila_int = fila.Select(int.Parse).ToList();
                         int valorMax = fila_int.Max();
 
-                        return valorMax.ToString();
+                        resultado.Correcto = true;
+                        resultado.Objecto= valorMax.ToString();
+                        return resultado;
                     }
                     catch (Exception)
                     {
-                        return "Error: Ingrese los datos correctamente.";
+                        resultado.Correcto = false;
+                        resultado.Mensaje = "Error: Ingrese los datos correctamente.";
+                        return resultado;
                     }
                 }
                 else
@@ -232,23 +267,31 @@ namespace Logica
                             maxCol.Add(filasHDT[i].Max());
                         }
 
-                        return String.Join(" ", maxCol);
+                        resultado.Correcto = true;
+                        resultado.Objecto = String.Join(" ", maxCol);
+                        return resultado;
                     }
                     catch (Exception)
                     {
-                        return "Error: Ingrese los datos correctamente.";
+                        resultado.Correcto= false;
+                        resultado.Mensaje = "Error: Ingrese los datos correctamente.";
+                        return resultado;
                     }
 
                 }
             }
             else
             {
-                return "Error: Los datos ingresados no son numéricos.";
+                resultado.Correcto = false;
+                resultado.Mensaje = "Error: Los datos ingresados no son numéricos.";
+                return resultado;
             }
         }
 
-        public static string maxk(string matriz, int k)
+        public static Resultado maxk(string matriz, int k)
         {
+            Resultado resultado = new Resultado();
+
             if (Regex.IsMatch(matriz, @"^[\s*-?0-9]") && !(Regex.IsMatch(matriz, @"[a-z]+")))
             {
                 var filas = new List<String>(matriz.Split('\n'));
@@ -266,11 +309,16 @@ namespace Logica
                         {
                             val_max.Add(fila_int[i]);
                         }
-                        return String.Join(" ", val_max);
+
+                        resultado.Correcto = true;
+                        resultado.Objecto = String.Join(" ", val_max);
+                        return resultado;
                     }
                     catch (Exception)
                     {
-                        return "Error: Ingrese los datos correctamente.";
+                        resultado.Correcto = false;
+                        resultado.Mensaje = "Error: Ingrese los datos correctamente.";
+                        return resultado;
                     }
                 }
                 else
@@ -301,48 +349,67 @@ namespace Logica
                             val_max = val_max + (String.Join(" ", filasHD[i])) + "\n";
                         }
 
-                        return val_max;
+                        resultado.Correcto= true;
+                        resultado.Objecto = val_max;
+                        return resultado;
                     }
                     catch (Exception)
                     {
-                        return "Error: Ingrese los datos correctamente.";
+                        resultado.Correcto = false;
+                        resultado.Mensaje = "Error: Ingrese los datos correctamente.";
+                        return resultado;
                     }
                 }
             }
             else
             {
-                return "Error: Los datos ingresados no son numéricos.";
+                resultado.Correcto = false;
+                resultado.Mensaje = "Error: Los datos ingresados no son numéricos.";
+                return resultado;
             }
         }
 
-        public static string randi(int rango, int filas, int col)
+        public static Resultado randi(int rango, int filas, int col)
         {
-            Matrix<double> matriz = Matrix<double>.Build.Dense(filas, col);
-            Random rnd = new Random();
-            for (int i = 0; i < filas; i++)
+            Resultado resultado = new Resultado();
+
+            try
             {
-                for (int j = 0; j < col; j++)
+                Matrix<double> matriz = Matrix<double>.Build.Dense(filas, col);
+                Random rnd = new Random();
+                for (int i = 0; i < filas; i++)
                 {
-                    matriz[i, j] = rnd.Next(rango);
+                    for (int j = 0; j < col; j++)
+                    {
+                        matriz[i, j] = rnd.Next(rango);
+                    }
                 }
+
+                var vArray = matriz.ToArray();
+
+                // Convertir matriz a string de salida
+
+                string salida = "";
+                for (int i = 0; i < vArray.GetLength(0); i++)
+                {
+                    string filaX = "";
+                    for (int j = 0; j < vArray.GetLength(1); j++)
+                    {
+                        filaX = filaX + vArray[i, j] + " ";
+                    }
+                    salida += filaX + '\n';
+                }
+
+                resultado.Correcto = true;
+                resultado.Objecto = salida;
+            }
+            catch (Exception)
+            {
+                resultado.Correcto = false;
+                resultado.Mensaje = "Error: Hay un error.";
             }
 
-            var vArray = matriz.ToArray();
-
-            // Convertir matriz a string de salida
-
-            string salida = "";
-            for (int i = 0; i < vArray.GetLength(0); i++)
-            {
-                string filaX = "";
-                for (int j = 0; j < vArray.GetLength(1); j++)
-                {
-                    filaX = filaX + vArray[i, j] + " ";
-                }
-                salida += filaX + '\n';
-            }
-
-            return salida;
+            return resultado;
         }
     }
 }

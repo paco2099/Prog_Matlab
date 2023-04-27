@@ -4,8 +4,10 @@ namespace Logica
 {
     public class Estadistica
     {
-        public static string mean(string matriz, int a)
+        public static Resultado mean(string matriz, int a)
         {
+            Resultado resultado = new Resultado();
+
             if (Regex.IsMatch(matriz, @"[\n]"))
             {
                 var filas = new List<String>(matriz.Split('\n'));
@@ -39,7 +41,9 @@ namespace Logica
                         }
                         else
                         {
-                            return "Error 2: La matriz no es cuadrada. Favor ingresar una matriz cuadrada.";
+                            resultado.Correcto = false;
+                            resultado.Mensaje = "Error 2: La matriz no es cuadrada. Favor ingresar una matriz cuadrada.";
+                            return resultado;
                         }
                     }
 
@@ -55,7 +59,10 @@ namespace Logica
                     {
                         mean = mean + (String.Join(" ", mean_filas[l])) + "\n";
                     }
-                    return mean;
+
+                    resultado.Correcto = true;
+                    resultado.Objecto = mean;
+                    return resultado;
                 }
                 else if (a == 2)
                 {
@@ -91,26 +98,36 @@ namespace Logica
                         }
                         else
                         {
-                            return "Error 2: La matriz no es cuadrada. Favor ingresar una matriz cuadrada.";
+                            resultado.Correcto = false;
+                            resultado.Mensaje = "Error 2: La matriz no es cuadrada. Favor ingresar una matriz cuadrada.";
+                            return resultado;
                         }
 
                     }
 
-                    return String.Join(" ", meanCol);
+                    resultado.Correcto = true;
+                    resultado.Objecto = String.Join(" ", meanCol);
+                    return resultado;
                 }
                 else
                 {
-                    return "Error";
+                    resultado.Correcto = false;
+                    resultado.Mensaje = "Error";
+                    return resultado;
                 }
             }
             else
             {
-                return "Error 1: Debe de ingresar una matriz cuadrada.";
+                resultado.Correcto = false;
+                resultado.Mensaje = "Error 1: Debe de ingresar una matriz cuadrada.";
+                return resultado;
             }
         }
     
-        public static string median(string matriz, int a)
+        public static Resultado median(string matriz, int a)
         {
+            Resultado resultado = new Resultado();
+
             //NO ESTÁ TERMINADO, FALTA CALCULAR LAS MEDIANA
             {
                 if (Regex.IsMatch(matriz, @"[\n]"))
@@ -146,7 +163,9 @@ namespace Logica
                             }
                             else
                             {
-                                return "Error 2: La matriz no es cuadrada. Favor ingresar una matriz cuadrada.";
+                                resultado.Correcto = false;
+                                resultado.Mensaje = "Error 2: La matriz no es cuadrada. Favor ingresar una matriz cuadrada.";
+                                return resultado;
                             }
                         }
 
@@ -162,7 +181,10 @@ namespace Logica
                         {
                             median = median + (String.Join(" ", median_filas[l])) + "\n";
                         }
-                        return median;
+
+                        resultado.Correcto = true;
+                        resultado.Objecto = median;
+                        return resultado;
                     }
                     else if (a == 2)
                     {
@@ -198,21 +220,29 @@ namespace Logica
                             }
                             else
                             {
-                                return "Error 2: La matriz no es cuadrada. Favor ingresar una matriz cuadrada.";
+                                resultado.Correcto = false;
+                                resultado.Mensaje = "Error 2: La matriz no es cuadrada. Favor ingresar una matriz cuadrada.";
+                                return resultado;
                             }
 
                         }
 
-                        return String.Join(" ", meanCol);
+                        resultado.Correcto = true;
+                        resultado.Objecto = String.Join(" ", meanCol);
+                        return resultado;
                     }
                     else
                     {
-                        return "Error";
+                        resultado.Correcto = false;
+                        resultado.Mensaje = "Error";
+                        return resultado;
                     }
                 }
                 else
                 {
-                    return "Error 1: Debe de ingresar una matriz cuadrada.";
+                    resultado.Correcto = false;
+                    resultado.Mensaje = "Error 1: Debe de ingresar una matriz cuadrada.";
+                    return resultado;
                 }
             }
         }

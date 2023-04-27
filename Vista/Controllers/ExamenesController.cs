@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Logica;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 
 namespace Vista.Controllers
@@ -13,8 +14,16 @@ namespace Vista.Controllers
         [HttpPost]
         public JsonResult examen1(string matriz)
         {
-            string salida = Logica.Examenes.examen1(matriz);
-            return Json(salida);
+            Resultado salida = Logica.Examenes.examen1(matriz);
+
+            if (salida.Correcto)
+            {
+                return Json(salida.Objecto);
+            }
+            else
+            {
+                return Json(salida.Mensaje);
+            }
         }
     }
 }

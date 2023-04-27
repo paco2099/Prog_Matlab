@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Logica;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace Vista.Controllers
@@ -13,9 +14,17 @@ namespace Vista.Controllers
         [HttpPost]
         public JsonResult min(string matriz)
         {
-            string respuesta = Logica.Matriz.min(matriz);
+            Resultado rest = Logica.Matriz.min(matriz);
 
-            return Json(respuesta);
+            if (rest.Correcto)
+            {
+                return Json(rest.Objecto);
+            }
+            else
+            {
+                return Json(rest.Mensaje);
+            }
+                        
         }
 
         public IActionResult Mink()
@@ -26,9 +35,15 @@ namespace Vista.Controllers
         [HttpPost]
         public JsonResult mink(string matriz, int k)
         {
-            string salida = Logica.Matriz.mink(matriz, k);
+            Resultado salida = Logica.Matriz.mink(matriz, k);
 
-            return Json(salida);
+            if (salida.Correcto)
+            {
+                return Json(salida.Objecto);
+            } else
+            {
+                return Json(salida.Mensaje);
+            }
         }
 
         public IActionResult Max()
@@ -39,9 +54,16 @@ namespace Vista.Controllers
         [HttpPost]
         public JsonResult max(string matriz)
         {
-            string salida = Logica.Matriz.max(matriz);
+            Resultado salida = Logica.Matriz.max(matriz);
 
-            return Json(salida);
+            if (salida.Correcto)
+            {
+                return Json(salida.Objecto);
+            }
+            else
+            {
+                return Json(salida.Mensaje);
+            }
         }
 
         public IActionResult Maxk()
@@ -52,8 +74,16 @@ namespace Vista.Controllers
         [HttpPost]
         public JsonResult maxk(string matriz, int k)
         {
-            string salida = Logica.Matriz.maxk(matriz, k);
-            return Json(salida);
+            Resultado salida = Logica.Matriz.maxk(matriz, k);
+
+            if (salida.Correcto)
+            {
+                return Json(salida.Objecto);
+            }
+            else
+            {
+                return Json(salida.Mensaje);
+            }
         }
 
         public IActionResult Randi()
@@ -64,8 +94,16 @@ namespace Vista.Controllers
         [HttpPost]
         public JsonResult randi(int rango, int filas, int col)
         {
-           string salida = Logica.Matriz.randi(rango, filas, col);
-            return Json(salida);
+           Resultado salida = Logica.Matriz.randi(rango, filas, col);
+           
+            if (salida.Correcto)
+            {
+                return Json(salida.Objecto);
+            }
+            else
+            {
+                return Json(salida.Mensaje);
+            }
         }
     }
 }
