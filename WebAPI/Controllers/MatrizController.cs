@@ -81,5 +81,20 @@ namespace WebAPI.Controllers
                 return BadRequest(respuesta);
             }
         }
+
+        [HttpPost("mat-graf_vec/{matriz}")]
+        public IActionResult graf_vec(string matriz)
+        {
+            Modelo.Resultado respuesta = Logica.Matriz.graf_vec(matriz);
+
+            if (respuesta.Correcto)
+            {
+                return Ok(respuesta);
+            }
+            else
+            {
+                return BadRequest(respuesta);
+            }
+        }
     }
 }

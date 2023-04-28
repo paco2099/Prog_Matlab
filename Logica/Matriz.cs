@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using MathNet.Numerics.LinearAlgebra;
+﻿using MathNet.Numerics.LinearAlgebra;
+using System.Text.RegularExpressions;
 
 namespace Logica
 {
@@ -409,6 +409,72 @@ namespace Logica
                 resultado.Mensaje = "Error: Hay un error.";
             }
 
+            return resultado;
+        }
+    
+        public static Modelo.Resultado graf_vec(string matriz)
+        {
+            Modelo.Resultado resultado = new Modelo.Resultado();
+
+
+            //if (Regex.IsMatch(matriz, @"^[\s*-?0-9]"))
+            //{
+                try
+                {
+                    var filas = new List<String>(matriz.Split('\n'));
+
+                    if (filas.Count==1)
+                    {
+                        var fila = new List<String>(Regex.Split(filas[0], @"[\s-;-\[-\]]+"));
+
+                        if (String.IsNullOrEmpty(fila[fila.Count - 1]))
+                        {
+                            fila.RemoveAt(fila.Count - 1);
+                        }
+                        if (String.IsNullOrEmpty(fila[0]))
+                        {
+                            fila.RemoveAt(0);
+                        }
+                        var fila_int = fila.Select(int.Parse).ToList();
+                        resultado.Correcto = true;
+                        resultado.Objecto = fila_int;
+                    }
+                    else
+                    {
+                        var filasHD = new List<List<int>>();
+
+                        for (int i = 0; i < filas.Count; i++)
+                        {
+                            var fs = new List<String>(Regex.Split(filas[0], @"[\s-;-\[-\]]+"));
+                            if (String.IsNullOrEmpty(fs[fs.Count - 1]))
+                            {
+                                fs.RemoveAt(fs.Count - 1);
+                            }
+                            if (String.IsNullOrEmpty(fs[0]))
+                            {
+                                fs.RemoveAt(0);
+                            }
+                            var fs_int = fs.Select(int.Parse).ToList();
+
+                            filasHD.Add(fs_int);
+                        }
+
+                        resultado.Correcto = true;
+                        resultado.Objecto = filasHD;
+                    }
+                }
+                catch (Exception)
+                {
+                    resultado.Correcto = false;
+                    resultado.Mensaje = "Error de back 1: Ha ocurrido un error.";
+                }
+            //}
+            //else
+            //{
+            //    resultado.Correcto = false;
+            //    resultado.Mensaje = "Error de back 2: No puede haber letras.";
+            //}
+               
             return resultado;
         }
     }
