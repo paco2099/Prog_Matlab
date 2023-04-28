@@ -4,9 +4,9 @@ namespace Logica
 {
     public class Estadistica
     {
-        public static Resultado mean(string matriz, int a)
+        public static Modelo.Resultado mean(string matriz, int a)
         {
-            Resultado resultado = new Resultado();
+            Modelo.Resultado resultado = new Modelo.Resultado();
 
             if (Regex.IsMatch(matriz, @"[\n]"))
             {
@@ -124,9 +124,9 @@ namespace Logica
             }
         }
     
-        public static Resultado median(string matriz, int a)
+        public static Modelo.Resultado median(string matriz, int a)
         {
-            Resultado resultado = new Resultado();
+            Modelo.Resultado resultado = new Modelo.Resultado();
 
             //NO ESTÁ TERMINADO, FALTA CALCULAR LAS MEDIANA
             {

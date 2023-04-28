@@ -4,9 +4,9 @@ namespace Logica
 {
     public class Examenes
     {
-        public static Resultado examen1(string matriz)
+        public static Modelo.Resultado examen1(string matriz)
         {
-            Resultado resultado = new Resultado();
+            Modelo.Resultado resultado = new Modelo.Resultado();
 
             try
             {

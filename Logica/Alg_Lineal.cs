@@ -6,9 +6,9 @@ namespace Logica
 {
     public class Alg_Lineal
     {
-        public static Resultado mldivide(string m1, string m2)
+        public static Modelo.Resultado mldivide(string m1, string m2)
         {
-            Resultado resultado = new Resultado();
+            Modelo.Resultado resultado = new Modelo.Resultado();
 
             if (Regex.IsMatch(m1, @"^[\s*-?0-9]") && (Regex.IsMatch(m2, @"^[\s*-?0-9]")))
             {

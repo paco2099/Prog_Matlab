@@ -1,11 +1,20 @@
-﻿using Logica;
-using Microsoft.AspNetCore.Mvc;
-
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace Vista.Controllers
 {
     public class MatrizController : Controller
     {
+        private readonly IConfiguration _configuration;
+
+        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
+
+        public MatrizController(IConfiguration configuration, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
+        {
+            _configuration = configuration;
+            _hostingEnvironment = hostingEnvironment;
+        }
+
         public IActionResult Tarea1()
         {
             return View();
@@ -14,18 +23,64 @@ namespace Vista.Controllers
         [HttpPost]
         public JsonResult min(string matriz)
         {
-            Resultado rest = Logica.Matriz.min(matriz);
+            Modelo.Resultado resultado = new Modelo.Resultado();
 
-            if (rest.Correcto)
+            try
             {
-                return Json(rest.Objecto);
+                string urlAPI = _configuration["API"];
+                using (var cliente = new HttpClient())
+                {
+                    cliente.BaseAddress = new Uri(urlAPI);
+                    var peticion = cliente.PostAsync($"Matriz/mat-min/{matriz}", null);
+                    peticion.Wait();
+
+                    var resultadoPeticion = peticion.Result;
+                    if (resultadoPeticion.IsSuccessStatusCode)
+                    {
+                        var leerPeticion = resultadoPeticion.Content.ReadAsStringAsync();
+                        leerPeticion.Wait();
+
+                        dynamic resultadoJSON = JObject.Parse(leerPeticion.Result);
+
+                        if (Convert.ToBoolean(resultadoJSON.correcto))
+                        {
+                            resultado.Correcto = true;
+                            resultado.Objecto = Convert.ToString(resultadoJSON.objecto);
+                        }
+                        else
+                        {
+                            resultado.Correcto = false;
+                            resultado.Mensaje = Convert.ToString(resultadoJSON.mensaje);
+                        }
+                    }
+                    else
+                    {
+                        var leerPeticion = resultadoPeticion.Content.ReadAsStringAsync();
+                        leerPeticion.Wait();
+                        dynamic resultadoJSON = JObject.Parse(leerPeticion.Result);
+
+                        resultado.Correcto = false;
+                        resultado.Mensaje = Convert.ToString(resultadoJSON.mensaje);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado.Correcto = false;
+                resultado.Mensaje = ex.Message;
+                resultado.Excepcion = ex;
+            }
+
+            if (resultado.Correcto)
+            {
+                return Json(resultado.Objecto);
             }
             else
             {
-                return Json(rest.Mensaje);
+                return Json(resultado.Mensaje);
             }
-                        
         }
+
 
         public IActionResult Mink()
         {
@@ -35,14 +90,60 @@ namespace Vista.Controllers
         [HttpPost]
         public JsonResult mink(string matriz, int k)
         {
-            Resultado salida = Logica.Matriz.mink(matriz, k);
+            Modelo.Resultado resultado = new Modelo.Resultado();
 
-            if (salida.Correcto)
+            try
             {
-                return Json(salida.Objecto);
-            } else
+                string urlAPI = _configuration["API"];
+                using (var cliente = new HttpClient())
+                {
+                    cliente.BaseAddress = new Uri(urlAPI);
+                    var peticion = cliente.PostAsync($"Matriz/mat-mink/{matriz}&{k}", null);
+                    peticion.Wait();
+
+                    var resultadoPeticion = peticion.Result;
+                    if (resultadoPeticion.IsSuccessStatusCode)
+                    {
+                        var leerPeticion = resultadoPeticion.Content.ReadAsStringAsync();
+                        leerPeticion.Wait();
+
+                        dynamic resultadoJSON = JObject.Parse(leerPeticion.Result);
+
+                        if (Convert.ToBoolean(resultadoJSON.correcto))
+                        {
+                            resultado.Correcto = true;
+                            resultado.Objecto = Convert.ToString(resultadoJSON.objecto);
+                        }
+                        else
+                        {
+                            resultado.Correcto = false;
+                            resultado.Mensaje = Convert.ToString(resultadoJSON.mensaje);
+                        }
+                    }else
+                    {
+                        var leerPeticion = resultadoPeticion.Content.ReadAsStringAsync();
+                        leerPeticion.Wait();
+                        dynamic resultadoJSON = JObject.Parse(leerPeticion.Result);
+
+                        resultado.Correcto = false;
+                        resultado.Mensaje = Convert.ToString(resultadoJSON.mensaje);
+                    }
+                }
+            }
+            catch (Exception ex)
             {
-                return Json(salida.Mensaje);
+                resultado.Correcto = false;
+                resultado.Mensaje = ex.Message;
+                resultado.Excepcion = ex;
+            }
+
+            if (resultado.Correcto)
+            {
+                return Json(resultado.Objecto);
+            }
+            else
+            {
+                return Json(resultado.Mensaje);
             }
         }
 
@@ -54,15 +155,61 @@ namespace Vista.Controllers
         [HttpPost]
         public JsonResult max(string matriz)
         {
-            Resultado salida = Logica.Matriz.max(matriz);
+            Modelo.Resultado resultado = new Modelo.Resultado();
 
-            if (salida.Correcto)
+            try
             {
-                return Json(salida.Objecto);
+                string urlAPI = _configuration["API"];
+                using (var cliente = new HttpClient())
+                {
+                    cliente.BaseAddress = new Uri(urlAPI);
+                    var peticion = cliente.PostAsync($"Matriz/mat-max/{matriz}", null);
+                    peticion.Wait();
+
+                    var resultadoPeticion = peticion.Result;
+                    if (resultadoPeticion.IsSuccessStatusCode)
+                    {
+                        var leerPeticion = resultadoPeticion.Content.ReadAsStringAsync();
+                        leerPeticion.Wait();
+
+                        dynamic resultadoJSON = JObject.Parse(leerPeticion.Result);
+
+                        if (Convert.ToBoolean(resultadoJSON.correcto))
+                        {
+                            resultado.Correcto = true;
+                            resultado.Objecto = Convert.ToString(resultadoJSON.objecto);
+                        }
+                        else
+                        {
+                            resultado.Correcto = false;
+                            resultado.Mensaje = Convert.ToString(resultadoJSON.mensaje);
+                        }
+                    }
+                    else
+                    {
+                        var leerPeticion = resultadoPeticion.Content.ReadAsStringAsync();
+                        leerPeticion.Wait();
+                        dynamic resultadoJSON = JObject.Parse(leerPeticion.Result);
+
+                        resultado.Correcto = false;
+                        resultado.Mensaje = Convert.ToString(resultadoJSON.mensaje);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado.Correcto = false;
+                resultado.Mensaje = ex.Message;
+                resultado.Excepcion = ex;
+            }
+
+            if (resultado.Correcto)
+            {
+                return Json(resultado.Objecto);
             }
             else
             {
-                return Json(salida.Mensaje);
+                return Json(resultado.Mensaje);
             }
         }
 
@@ -74,15 +221,61 @@ namespace Vista.Controllers
         [HttpPost]
         public JsonResult maxk(string matriz, int k)
         {
-            Resultado salida = Logica.Matriz.maxk(matriz, k);
+            Modelo.Resultado resultado = new Modelo.Resultado();
 
-            if (salida.Correcto)
+            try
             {
-                return Json(salida.Objecto);
+                string urlAPI = _configuration["API"];
+                using (var cliente = new HttpClient())
+                {
+                    cliente.BaseAddress = new Uri(urlAPI);
+                    var peticion = cliente.PostAsync($"Matriz/mat-maxk/{matriz}&{k}", null);
+                    peticion.Wait();
+
+                    var resultadoPeticion = peticion.Result;
+                    if (resultadoPeticion.IsSuccessStatusCode)
+                    {
+                        var leerPeticion = resultadoPeticion.Content.ReadAsStringAsync();
+                        leerPeticion.Wait();
+
+                        dynamic resultadoJSON = JObject.Parse(leerPeticion.Result);
+
+                        if (Convert.ToBoolean(resultadoJSON.correcto))
+                        {
+                            resultado.Correcto = true;
+                            resultado.Objecto = Convert.ToString(resultadoJSON.objecto);
+                        }
+                        else
+                        {
+                            resultado.Correcto = false;
+                            resultado.Mensaje = Convert.ToString(resultadoJSON.mensaje);
+                        }
+                    }
+                    else
+                    {
+                        var leerPeticion = resultadoPeticion.Content.ReadAsStringAsync();
+                        leerPeticion.Wait();
+                        dynamic resultadoJSON = JObject.Parse(leerPeticion.Result);
+
+                        resultado.Correcto = false;
+                        resultado.Mensaje = Convert.ToString(resultadoJSON.mensaje);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado.Correcto = false;
+                resultado.Mensaje = ex.Message;
+                resultado.Excepcion = ex;
+            }
+
+            if (resultado.Correcto)
+            {
+                return Json(resultado.Objecto);
             }
             else
             {
-                return Json(salida.Mensaje);
+                return Json(resultado.Mensaje);
             }
         }
 
@@ -94,15 +287,61 @@ namespace Vista.Controllers
         [HttpPost]
         public JsonResult randi(int rango, int filas, int col)
         {
-           Resultado salida = Logica.Matriz.randi(rango, filas, col);
-           
-            if (salida.Correcto)
+            Modelo.Resultado resultado = new Modelo.Resultado();
+
+            try
             {
-                return Json(salida.Objecto);
+                string urlAPI = _configuration["API"];
+                using (var cliente = new HttpClient())
+                {
+                    cliente.BaseAddress = new Uri(urlAPI);
+                    var peticion = cliente.PostAsync($"Matriz/mat-randi/{rango}&{filas}&{col}", null);
+                    peticion.Wait();
+
+                    var resultadoPeticion = peticion.Result;
+                    if (resultadoPeticion.IsSuccessStatusCode)
+                    {
+                        var leerPeticion = resultadoPeticion.Content.ReadAsStringAsync();
+                        leerPeticion.Wait();
+
+                        dynamic resultadoJSON = JObject.Parse(leerPeticion.Result);
+
+                        if (Convert.ToBoolean(resultadoJSON.correcto))
+                        {
+                            resultado.Correcto = true;
+                            resultado.Objecto = Convert.ToString(resultadoJSON.objecto);
+                        }
+                        else
+                        {
+                            resultado.Correcto = false;
+                            resultado.Mensaje = Convert.ToString(resultadoJSON.mensaje);
+                        }
+                    }
+                    else
+                    {
+                        var leerPeticion = resultadoPeticion.Content.ReadAsStringAsync();
+                        leerPeticion.Wait();
+                        dynamic resultadoJSON = JObject.Parse(leerPeticion.Result);
+
+                        resultado.Correcto = false;
+                        resultado.Mensaje = Convert.ToString(resultadoJSON.mensaje);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado.Correcto = false;
+                resultado.Mensaje = ex.Message;
+                resultado.Excepcion = ex;
+            }
+
+            if (resultado.Correcto)
+            {
+                return Json(resultado.Objecto);
             }
             else
             {
-                return Json(salida.Mensaje);
+                return Json(resultado.Mensaje);
             }
         }
     }

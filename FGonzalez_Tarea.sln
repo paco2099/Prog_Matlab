@@ -5,12 +5,14 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vista", "Vista\Vista.csproj", "{F11A8192-46CD-43D6-A38A-B244C4E2ADFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{5F3D0A38-958D-4663-9820-F381E9AF42B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{5F3D0A38-958D-4663-9820-F381E9AF42B5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7371FD4B-1B26-40DF-B3B0-D784821FFCD0} = {7371FD4B-1B26-40DF-B3B0-D784821FFCD0}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logica", "Logica\Logica.csproj", "{7371FD4B-1B26-40DF-B3B0-D784821FFCD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logica", "Logica\Logica.csproj", "{7371FD4B-1B26-40DF-B3B0-D784821FFCD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modelo", "Modelo\Modelo.csproj", "{DDAB37B6-E563-43F3-B62D-594BE481932D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,10 @@ Global
 		{7371FD4B-1B26-40DF-B3B0-D784821FFCD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7371FD4B-1B26-40DF-B3B0-D784821FFCD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7371FD4B-1B26-40DF-B3B0-D784821FFCD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDAB37B6-E563-43F3-B62D-594BE481932D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDAB37B6-E563-43F3-B62D-594BE481932D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDAB37B6-E563-43F3-B62D-594BE481932D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDAB37B6-E563-43F3-B62D-594BE481932D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

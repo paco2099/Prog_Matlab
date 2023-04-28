@@ -5,9 +5,9 @@ namespace Logica
 {
     public class Matriz
     {
-        public static Resultado min(string matriz)
+        public static Modelo.Resultado min(string matriz)
         {
-            Resultado resultado = new Resultado();
+            Modelo.Resultado resultado = new Modelo.Resultado();
 
             if (Regex.IsMatch(matriz, @"^[\s*-?0-9]") && !(Regex.IsMatch(matriz, @"[a-z]+")))
             {
@@ -104,9 +104,9 @@ namespace Logica
             }
         }
 
-        public static Resultado mink(string matriz, int k)
+        public static Modelo.Resultado mink(string matriz, int k)
         {
-            Resultado resultado = new Resultado();
+            Modelo.Resultado resultado = new Modelo.Resultado();
 
             if (Regex.IsMatch(matriz, @"^[\s*-?0-9]") && !(Regex.IsMatch(matriz, @"[a-z]+")))
             {
@@ -220,8 +220,8 @@ namespace Logica
             }
         }
 
-        public static Resultado max(string matriz) {
-            Resultado resultado = new Resultado();
+        public static Modelo.Resultado max(string matriz) {
+            Modelo.Resultado resultado = new Modelo.Resultado();
 
             if (Regex.IsMatch(matriz, @"^[\s*-?0-9]") && !(Regex.IsMatch(matriz, @"[a-z]+")))
             {
@@ -288,9 +288,9 @@ namespace Logica
             }
         }
 
-        public static Resultado maxk(string matriz, int k)
+        public static Modelo.Resultado maxk(string matriz, int k)
         {
-            Resultado resultado = new Resultado();
+            Modelo.Resultado resultado = new Modelo.Resultado();
 
             if (Regex.IsMatch(matriz, @"^[\s*-?0-9]") && !(Regex.IsMatch(matriz, @"[a-z]+")))
             {
@@ -369,9 +369,9 @@ namespace Logica
             }
         }
 
-        public static Resultado randi(int rango, int filas, int col)
+        public static Modelo.Resultado randi(int rango, int filas, int col)
         {
-            Resultado resultado = new Resultado();
+            Modelo.Resultado resultado = new Modelo.Resultado();
 
             try
             {
