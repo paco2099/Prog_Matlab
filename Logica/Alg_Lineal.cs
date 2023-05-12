@@ -42,7 +42,7 @@ namespace Logica
                 // Crear String que almacene los datos de salida
                 string salida = "";
 
-                // Crear vector O matriz a
+                // Crear vector Ó matriz a
                 var filasA = m1.Split("\n");
 
                 if (filasA.Length == 1)

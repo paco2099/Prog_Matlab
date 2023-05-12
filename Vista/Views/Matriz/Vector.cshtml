@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "Vector";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+    <head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js"></script>
+    </head>
+    <body>
+    <h1>Vector</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            @Html.TextArea("entrada", new {style="width: 300px; height: 300px", @class="form-control"})
+        </div>
+
+        <div class="col-md-4">
+            <a id="btn" class="btn btn-danger"><i class="bi bi-pencil-square" o></i>Proceso</a>
+        </div>
+
+        <div class="col-md-4">
+            <canvas id="salida" width="300" height="300"></canvas>
+        </div>
+    </div>
+    </body>
+</html>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btn").click(function () {
+                const regex = /[\s*-?0-9]/;
+                const url = "@Url.Action("vector", "Matriz")";
+                const ent = $("#entrada").val();
+                const datos = { matriz: ent };
+                if (regex.test(ent)) {
+                    $.post(url, datos).done(function (datos) {
+                        console.log(datos);
+                        var graf = document.getElementById("salida").getContext("2d");
+                        var grafico = new Chart(graf, {
+                            type: "bar",
+                            data: {
+                                labels: [...Array(datos.length).keys()],
+                                datasets: [{
+                                    label: 'Datos',
+                                    data: datos
+                                }]
+                            },
+                        });
+                        //$("#salida").val(data);
+                    }).fail(function () {
+                        console.log("Error");
+                    });
+                } else {
+                    alert("Error de Front: Los valores ingresados no son numéricos.");
+                }
+            });
+        });
+    </script>
+}

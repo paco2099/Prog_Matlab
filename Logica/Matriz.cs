@@ -411,5 +411,87 @@ namespace Logica
 
             return resultado;
         }
+    
+        public static Modelo.Resultado vector(string matriz)
+        {
+            Modelo.Resultado resultado = new Modelo.Resultado();
+
+            if (Regex.IsMatch(matriz, @"[\s*-?0-9]") && !(Regex.IsMatch(matriz, @"[a-z]+")))
+            {
+                try
+                {
+                    if (Regex.IsMatch(matriz, @"^\[") && Regex.IsMatch(matriz, @"\]\z"))
+                    {
+                        string matriz_2 = matriz.Substring(1, matriz.Length - 2);
+
+                        // Dividir la cadena en filas
+                        string[] filas = matriz_2.Split(';');
+
+                        // Crear una matriz vacía con el número correcto de filas y columnas
+                        int filasMatriz = filas.Length;
+                        int columnasMatriz = filas[0].Split(' ').Length;
+                        Matrix<double> matrizHD = Matrix<double>.Build.Dense(filasMatriz, columnasMatriz);
+
+                        // Llenar la matriz con los números de la cadena
+                        for (int i = 0; i < filasMatriz; i++)
+                        {
+                            var fila = new List<String>(Regex.Split(filas[i], @"\s+"));
+                            if (String.IsNullOrEmpty(fila[fila.Count - 1]))
+                            {
+                                fila.RemoveAt(fila.Count - 1);
+                            }
+                            if (String.IsNullOrEmpty(fila[0]))
+                            {
+                                fila.RemoveAt(0);
+                            }
+                            var fila_int = fila.Select(int.Parse).ToList();
+                            for (int j = 0; j < columnasMatriz; j++)
+                            {
+                                matrizHD[i, j] = fila_int[j];
+                            }
+                        }
+
+                        // Crear Lissta de listas que almacene los datos de salida
+                        List<List<double>> salida = new List<List<double>>();
+
+                        var vArray = matrizHD.ToArray();
+
+                        // Convertir matriz a string de salida
+                        int f = vArray.GetLength(0);
+                        int c = vArray.GetLength(1);
+
+                        for (int i = 0; i < f; i++)
+                        {
+                            List<double> filaLista = new List<double>();
+                            for (int j = 0; j < c; j++)
+                            {
+                                filaLista.Add(vArray[i, j]);
+                            }
+                            salida.Add(filaLista);
+                        }
+
+                        resultado.Correcto = true;
+                        resultado.Objecto = salida;
+                    }
+                    else
+                    {
+                        resultado.Correcto= false;
+                        resultado.Mensaje = "Error: No hay una matriz declarada.";
+                    }
+                }
+                catch (Exception)
+                {
+                    resultado.Correcto = false;
+                    resultado.Mensaje = "Error: Ocurrió un error.";
+                }
+            }
+            else
+            {
+                resultado.Correcto= false;
+                resultado.Mensaje= "Error: los valores NO son numéricos.";
+            }
+
+            return resultado;
+        }
     }
 }

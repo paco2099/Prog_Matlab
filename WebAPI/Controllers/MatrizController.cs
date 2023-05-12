@@ -81,5 +81,20 @@ namespace WebAPI.Controllers
                 return BadRequest(respuesta);
             }
         }
+
+        [HttpPost("mat-vector/{matriz}")]
+        public IActionResult vector(string matriz)
+        {
+            Modelo.Resultado respuesta = Logica.Matriz.vector(matriz);
+
+            if (respuesta.Correcto)
+            {
+                return Ok(respuesta);
+            }
+            else
+            {
+                return BadRequest(respuesta);
+            }
+        }
     }
 }
