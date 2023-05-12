@@ -96,5 +96,20 @@ namespace WebAPI.Controllers
                 return BadRequest(respuesta);
             }
         }
+
+        [HttpPost("mat-pascal/{rango}")]
+        public IActionResult pascal(int rango)
+        {
+            Modelo.Resultado respuesta = Logica.Matriz.pascal(rango);
+
+            if (respuesta.Correcto)
+            {
+                return Ok(respuesta);
+            }
+            else
+            {
+                return BadRequest(respuesta);
+            }
+        }
     }
 }

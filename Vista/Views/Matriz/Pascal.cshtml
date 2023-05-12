@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Pascal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Pascal</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        Rango: @Html.TextBox("rang") <a id="btn" class="btn btn-danger"><i class="bi bi-pencil-square" o></i>Proceso</a>
+    </div>
+    <div class="col-md-4">
+        @Html.TextArea("salida", new { style = "width: 300px; height: 300px", @class = "form-control" })
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#btn").click(function () {
+                var url = "@Url.Action("pascal", "Matriz")";
+                var rango = $("#rang").val();
+                var data = { rango: rango};
+                const regex = /^[\s*-?0-9]+$/;
+
+                if (isNaN(rango)) {
+                    alert("Error: El rango ingresado NO es un número entero.");
+                }
+                else {
+                    $.post(url, data).done(function (data) {
+                        $("#salida").val(data);
+                    }).fail(function () {
+                        $("#salida").val("Error");
+                    });
+                }
+            });
+        });
+    </script>
+}

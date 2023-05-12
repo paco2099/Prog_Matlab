@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using MathNet.Numerics.LinearAlgebra;
 
 namespace Logica
@@ -492,6 +493,64 @@ namespace Logica
             }
 
             return resultado;
+        }
+    
+        public static Modelo.Resultado pascal(int rango)
+        {
+            Modelo.Resultado resultado = new Modelo.Resultado();
+
+            try
+            {
+                // Crear una matriz vacía con el número correcto de filas y columnas
+                Matrix<double> matrizHD = Matrix<double>.Build.Dense(rango, rango);
+
+                for (int i = 0; i < rango; i++)
+                {
+                    for (int j = 0;j < rango; j++)
+                    {
+                        if (i == 0)
+                        {
+                            matrizHD[i,j] = 1;
+                        }
+                        else
+                        {
+                            if (j == 0)
+                            {
+                                matrizHD[i, j] = 1;
+                            }
+                            else
+                            {
+                                matrizHD[i, j] = (matrizHD[i, j - 1] + matrizHD[i-1,j]);
+                            }
+                        }
+                    }
+                }
+
+                // Crear String que almacene los datos de salida
+                string salida = "";
+                var vArray = matrizHD.ToArray();
+
+                // Convertir matriz a string de salida
+                for (int i = 0; i < vArray.GetLength(0); i++)
+                {
+                    string filaX = "";
+                    for (int j = 0; j < vArray.GetLength(1); j++)
+                    {
+                        filaX = filaX + vArray[i, j] + " ";
+                    }
+                    salida += filaX + '\n';
+                }
+
+                resultado.Correcto = true;
+                resultado.Objecto = salida;
+            }
+            catch (Exception)
+            {
+                resultado.Correcto = false;
+                resultado.Mensaje = "Error: Ha ocurrido un error.";
+            }
+
+                return resultado;
         }
     }
 }
