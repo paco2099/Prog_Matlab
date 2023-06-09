@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MathNet.Numerics.LinearAlgebra;
+using System;
 
 namespace WebAPI.Controllers
 {
@@ -110,6 +112,49 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(respuesta);
             }
+        }
+
+        [HttpPost("mat-examen2/{n}&{m}&{i}&{j}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult examen2(int n, int m, int i, int j)
+        {   
+            if (!(n >= 2) & !(m >= 2))
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, "Error: Los valores de N y M tienen que ser mayores a 2");
+            }
+
+            // Crear una matriz vacía con el número correcto de filas y columnas
+            Matrix<double> matrizHD = Matrix<double>.Build.Dense(n, m);
+
+            var aa = new List<List<int>>();
+            Random rnd = new Random();
+
+            for (int k = 0; k < n; k++)
+            {
+                var bb = new List<int>();
+                for (int l = 0; l < m; j++)
+                {
+                    int v_rand = rnd.Next(0, 50);
+                    if (bb.Count == 0)
+                    {
+                        bb.Add(v_rand);
+                    }
+                    else
+                    {
+                        while (!(bb.Contains(v_rand)))
+                        {
+                            bb.Add(v_rand);
+                        }
+                    }
+                }
+
+                aa.Add(bb);
+            }
+
+            return Ok("Siiuuuu");
+
+
         }
     }
 }
