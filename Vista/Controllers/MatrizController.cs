@@ -476,6 +476,11 @@ namespace Vista.Controllers
                 return Json(resultado.Mensaje);
             }
         }
+
+        public IActionResult Examen2()
+        {
+            return View();
+        }
     }
 }
 

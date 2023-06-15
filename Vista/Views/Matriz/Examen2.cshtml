@@ -1,0 +1,138 @@
+﻿@{
+    ViewData["Title"] = "Examen2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Examen2</h1>
+<br />
+<h2>Crear Matriz</h2>
+<br />
+Filas (N):
+<input type="text" id="n" />
+<p></p>
+Columnas (M):
+<input type="text" id="m" />
+
+<a id="btn1" class="btn btn-danger"><i class="bi bi-pencil-square" o></i>Crear</a>
+
+<br />
+@Html.TextArea("salida", new { style = "width: 600px; height: 300px", @class = "form-control" })
+
+<br />
+Fila:
+<input type="text" id="i" />
+Columna:
+<input type="text" id="j" />
+<a id="btn2" class="btn btn-danger"><i class="bi bi-pencil-square" o></i>Dale prro</a>
+@Html.TextArea("salida2", new { style = "width: 60px; height: 30px", @class = "form-control" })
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            let matriz_creada = false;
+
+            $("#btn1").click(function () {
+                const url = 'http://localhost:5056/Matriz/mat-examen2';
+                const v_n = $("#n").val();
+                const v_m = $("#m").val();
+                const regex = /^[\s*-?0-9]+$/;
+                const parametros = {
+                    n: v_n,
+                    m: v_m
+                };
+
+                if (!(regex.test(v_n) && (regex.test(v_m)))){
+                    alert("Error: Los valores N y M no son enteros.");
+                    return;
+                }
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: JSON.stringify(parametros),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        // Convertir el objeto en una cadena JSON legible
+                        var json = JSON.stringify(response, null, 2);
+
+                        // Mostrar la cadena JSON en el textbox
+                        $("#salida").val(response);
+                        matriz_creada = true;
+                    },
+                    error: function (error) {
+                        if (error.responseJSON && error.responseJSON.message) {
+                            // Obtener el objeto de errores de la respuesta JSON
+                            var errores = error.responseJSON.message;
+
+                            // Convertir el objeto en una cadena JSON legible
+                            var json = JSON.stringify(errores, null, 2);
+
+                            // Mostrar la cadena JSON en el textbox
+                            alert(errores);
+                        } else if (error.responseText) {
+                            // Obtener el mensaje de error de la propiedad 'responseText'
+                            var mensajeError = error.responseText;
+                            alert(mensajeError);
+                        } else {
+                            alert("Error desconocido");
+                        }
+                        matriz_creada = false;
+                    }
+                });
+            });
+
+            $("#btn2").click(function () {
+                if (matriz_creada == false) {
+                    alert("Error: No se ha creado la matriz")
+                    return;
+                }
+                const regex = /^[\s*-?0-9]+$/;
+
+                const url = 'http://localhost:5056/Matriz/mat-coord'
+                const v_i = $("#i").val();
+                const v_j = $("#j").val();
+                const matriz = $("#salida").val();
+                const parametros = { i: v_i, j: v_j, matriz: matriz };
+
+                if (!(regex.test(v_i) && (regex.test(v_j)))) {
+                    alert("Error: Los valores ingresados no son enteros.");
+                    return;
+                }
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: JSON.stringify(parametros),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        // Convertir el objeto en una cadena JSON legible
+                        var json = JSON.stringify(response, null, 2);
+
+                        // Mostrar la cadena JSON en el textbox
+                        $("#salida2").val(response);
+                    },
+                    error: function (error) {
+                        if (error.responseJSON && error.responseJSON.message) {
+                            // Obtener el objeto de errores de la respuesta JSON
+                            var errores = error.responseJSON.message;
+
+                            // Convertir el objeto en una cadena JSON legible
+                            var json = JSON.stringify(errores, null, 2);
+
+                            // Mostrar la cadena JSON en una alerta
+                            alert(errores);
+                        } else if (error.responseText) {
+                            // Obtener el mensaje de error de la propiedad 'responseText'
+                            var mensajeError = error.responseText;
+                            alert(mensajeError);
+                        } else {
+                            alert("Error desconocido");
+                        }
+
+                    }
+                });
+
+            });
+        });
+    </script>
+}
