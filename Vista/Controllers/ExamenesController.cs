@@ -81,5 +81,10 @@ namespace Vista.Controllers
                 return Json(resultado.Mensaje);
             }
         }
+
+        public IActionResult Ordinario()
+        {
+            return View();
+        }
     }
 }

@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewData["Title"] = "Examen1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Ordinario</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <h4>Inserte los valores de la matriz</h4>
+        <input type="text" id="entrada" />
+        <a id="btn1" class="btn btn-danger"><i class="bi bi-pencil-square" o></i>Proceso</a>
+    </div>
+    <div class="col-md-4">
+        <h4>Matriz de Caracteres</h4>
+        @Html.TextArea("salida_matriz", new { style = "width: 300px; height: 300px", @class = "form-control" })
+        <a id="btn2" class="btn btn-danger"><i class="bi bi-pencil-square" o></i>Proceso</a>
+    </div>
+
+    <div class="col-md-4">
+        <h4>Matriz de Longitudes</h4>
+        @Html.TextArea("salida_srtlength", new { style = "width: 300px; height: 300px", @class = "form-control" })
+    </div>
+</div>
+
+@section Scripts
+    {
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#btn1").click(function () {
+                const regex = /\[\s*[a-z]+(\s*[,;]\s*[a-z]+)\s\\]/;
+                const url = 'http://localhost:5056/Examenes/mat-ordi';
+                const en = $("#entrada").val();
+                const parametros = {
+                    entrada: en
+                };
+
+                if (!(regex.test(en))) {
+                    alert("Error: Ingrese los valores en el formato adecuado.");
+                    return;
+                }
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: JSON.stringify(parametros),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        // Convertir el objeto en una cadena JSON legible
+                        var json = JSON.stringify(response, null, 2);
+
+                        // Mostrar la cadena JSON en el textbox
+                        $("#salida_matriz").val(response);
+                    },
+                    error: function (error) {
+                        if (error.responseJSON && error.responseJSON.message) {
+                            // Obtener el objeto de errores de la respuesta JSON
+                            var errores = error.responseJSON.message;
+
+                            // Convertir el objeto en una cadena JSON legible
+                            var json = JSON.stringify(errores, null, 2);
+
+                            // Mostrar la cadena JSON en el textbox
+                            alert(errores);
+                        } else if (error.responseText) {
+                            // Obtener el mensaje de error de la propiedad 'responseText'
+                            var mensajeError = error.responseText;
+                            alert(mensajeError);
+                        } else {
+                            alert("Error desconocido");
+                        }
+                    }
+                });
+            });
+
+            $("#btn2").click(function () {
+                const url = 'http://localhost:5056/Examenes/mat-ordi-strlength';
+                const matriz = $("#salida_matriz").val();
+                const parametros = {
+                    mat: matriz
+                };
+
+                //if (!(regex.test(en))) {
+                //    alert("Error: Ingrese los valores en el formato adecuado.");
+                //    return;
+                //}
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: JSON.stringify(parametros),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        // Convertir el objeto en una cadena JSON legible
+                        var json = JSON.stringify(response, null, 2);
+
+                        // Mostrar la cadena JSON en el textbox
+                        $("#salida_srtlength").val(response);
+                    },
+                    error: function (error) {
+                        if (error.responseJSON && error.responseJSON.message) {
+                            // Obtener el objeto de errores de la respuesta JSON
+                            var errores = error.responseJSON.message;
+
+                            // Convertir el objeto en una cadena JSON legible
+                            var json = JSON.stringify(errores, null, 2);
+
+                            // Mostrar la cadena JSON en el textbox
+                            alert(errores);
+                        } else if (error.responseText) {
+                            // Obtener el mensaje de error de la propiedad 'responseText'
+                            var mensajeError = error.responseText;
+                            alert(mensajeError);
+                        } else {
+                            alert("Error desconocido");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}
